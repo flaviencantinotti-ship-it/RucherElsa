@@ -1,0 +1,295 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Le Rucher d'Elsa</title></head><body style="margin:0;"><style>
+:root{
+  --black:#0a0908; --black-2:#121110; --honey:#dc9f2e; --honey-light:#f0c878;
+  --cream:#f5efe1; --cream-dim:#a89f8c; --rust:#7a4b23;
+}
+*{box-sizing:border-box;}
+html{width:100%;overflow-x:hidden;scroll-behavior:smooth;}
+#hero,#histoire,#miel,#pollinisation,#contact{scroll-margin-top:100px;}
+body,.elementor,.elementor-widget-container{width:100% !important;max-width:100% !important;overflow-x:hidden;}
+.rdl-scope{background:var(--black);color:var(--cream);font-family:'Manrope',sans-serif;font-weight:400;line-height:1.6;width:100%;}
+.rdl-scope h1,.rdl-scope h2,.rdl-scope h3{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-0.01em;color:var(--cream);}
+.rdl-scope a{color:inherit;text-decoration:none;}
+.rdl-scope .wrap{max-width:1180px;margin:0 auto;padding:0 32px;position:relative;z-index:2;width:100%;}
+.rdl-scope .eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--honey);}
+.rdl-scope .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease, transform .8s ease;}
+.rdl-scope .reveal.in{opacity:1;transform:translateY(0);}
+#torch-hexfield{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0.5;}
+#torch-hexfield svg{width:100%;height:100%;}
+#torch-glow{position:fixed;inset:0;z-index:3;pointer-events:none;mix-blend-mode:screen;
+  background:radial-gradient(circle 380px at var(--mx,50%) var(--my,50%), rgba(220,159,46,0.45), rgba(220,159,46,0.10) 40%, transparent 70%);
+  transition:opacity .4s ease;}
+#torch-vignette{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(circle 460px at var(--mx,50%) var(--my,50%), transparent 0%, rgba(0,0,0,0.35) 75%);}
+.rdl-scope nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:30px 44px;background:rgba(10,9,8,0.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(245,239,225,0.06);}
+.rdl-scope .logo{font-family:'Fraunces',serif;font-size:24px;display:flex;align-items:center;gap:12px;}
+.rdl-scope .logo svg{width:30px;height:30px;}
+.rdl-scope .nav-links{display:flex;gap:38px;font-size:16px;font-weight:500;}
+.rdl-scope .nav-links a{opacity:.85;position:relative;padding-bottom:4px;}
+.rdl-scope .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--honey);transition:width .3s;}
+.rdl-scope .nav-links a:hover::after{width:100%;}
+.rdl-scope .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:2px;font-size:14px;font-weight:600;
+  border:1px solid var(--honey);color:var(--black);background:var(--honey);transition:transform .25s, background .25s;white-space:nowrap;}
+.rdl-scope .btn:hover{background:var(--honey-light);}
+.rdl-scope .btn-ghost{background:transparent;color:var(--cream);border:1px solid rgba(245,239,225,0.25);}
+.rdl-scope .btn-ghost:hover{border-color:var(--honey);color:var(--honey);}
+.rdl-scope .burger{display:none;background:none;border:1px solid rgba(245,239,225,0.3);border-radius:2px;
+  width:42px;height:42px;color:var(--cream);font-size:20px;cursor:pointer;align-items:center;justify-content:center;}
+.rdl-scope .nav-mobile{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:60;background:rgba(10,9,8,0.98);
+  flex-direction:column;align-items:center;justify-content:center;gap:32px;}
+.rdl-scope .nav-mobile.open{display:flex;}
+.rdl-scope .nav-mobile a{font-family:'Fraunces',serif;font-size:28px;color:var(--cream);}
+.rdl-scope .nav-mobile .close{position:absolute;top:28px;right:28px;background:none;border:none;color:var(--cream);font-size:28px;cursor:pointer;}
+.rdl-scope .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;width:100%;}
+.rdl-scope .hero-content{position:relative;z-index:2;width:100%;padding-top:80px;}
+.rdl-scope .hero-tag{display:flex;align-items:center;gap:10px;margin-bottom:22px;}
+.rdl-scope .hero-tag .line{width:36px;height:1px;background:var(--honey);}
+.rdl-scope .hero h1{font-size:clamp(38px,6.2vw,86px);line-height:1.05;max-width:920px;margin-bottom:26px;}
+.rdl-scope .hero h1 em{font-style:italic;color:var(--honey);}
+.rdl-scope .hero-sub{font-size:clamp(15px,2vw,18px);color:var(--cream-dim);max-width:520px;margin-bottom:40px;}
+.rdl-scope .hero-actions{display:flex;gap:16px;flex-wrap:wrap;}
+.rdl-scope .scroll-cue{position:absolute;bottom:40px;left:32px;display:flex;align-items:center;gap:12px;font-size:12px;color:var(--cream-dim);z-index:2;}
+.rdl-scope .scroll-cue .stick{width:1px;height:36px;background:linear-gradient(to bottom, var(--honey), transparent);animation:sm 2.2s ease-in-out infinite;}
+@keyframes sm{0%,100%{opacity:.3}50%{opacity:1}}
+.rdl-scope .story{padding:150px 0 110px;width:100%;}
+.rdl-scope .story-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:80px;align-items:center;}
+.rdl-scope .story-visual{aspect-ratio:4/5;border-radius:6px;background:var(--black-2);border:1px solid rgba(220,159,46,0.15);position:relative;overflow:hidden;}
+.rdl-scope .story-visual .frame-label{position:absolute;bottom:24px;left:24px;right:24px;font-size:12px;color:var(--cream-dim);border-top:1px solid rgba(245,239,225,0.12);padding-top:14px;}
+.rdl-scope .story h2{font-size:clamp(28px,3.4vw,44px);margin:14px 0 24px;line-height:1.15;}
+.rdl-scope .story p{color:var(--cream-dim);font-size:16px;margin-bottom:18px;max-width:480px;}
+.rdl-scope .story-facts{display:flex;gap:40px;margin-top:36px;flex-wrap:wrap;}
+.rdl-scope .fact b{display:block;font-family:'Fraunces',serif;font-size:30px;color:var(--honey);}
+.rdl-scope .fact span{font-size:13px;color:var(--cream-dim);}
+.rdl-scope .products{padding:100px 0;width:100%;}
+.rdl-scope .section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;gap:24px;flex-wrap:wrap;}
+.rdl-scope .section-head h2{font-size:clamp(26px,3.2vw,42px);margin-top:12px;max-width:520px;}
+.rdl-scope .section-head p{color:var(--cream-dim);max-width:340px;font-size:15px;}
+.rdl-scope .hex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.rdl-scope .hex-card{padding:38px 26px 30px;background:var(--black-2);border:1px solid rgba(245,239,225,0.08);
+  clip-path:polygon(8% 0,92% 0,100% 50%,92% 100%,8% 100%,0 50%);transition:transform .4s, border-color .4s;}
+.rdl-scope .hex-card:hover{transform:translateY(-6px);border-color:var(--honey);}
+.rdl-scope .hex-card .num{font-size:12px;color:var(--rust);letter-spacing:.1em;margin-bottom:16px;display:block;}
+.rdl-scope .hex-card h3{font-size:22px;margin-bottom:10px;}
+.rdl-scope .hex-card p{font-size:14px;color:var(--cream-dim);margin-bottom:18px;}
+.rdl-scope .hex-card .price{font-family:'Fraunces',serif;color:var(--honey);font-size:18px;}
+.rdl-scope .service{padding:120px 0;border-top:1px solid rgba(245,239,225,0.06);width:100%;}
+.rdl-scope .service-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;}
+.rdl-scope .service h2{font-size:clamp(26px,3.2vw,42px);margin:14px 0 22px;}
+.rdl-scope .service p{color:var(--cream-dim);margin-bottom:28px;max-width:460px;}
+.rdl-scope .service-list li{list-style:none;display:flex;gap:16px;padding:20px 0;border-bottom:1px solid rgba(245,239,225,0.08);align-items:flex-start;}
+.rdl-scope .service-list li:first-child{border-top:1px solid rgba(245,239,225,0.08);}
+.rdl-scope .service-list .ico{color:var(--honey);font-family:'Fraunces',serif;font-size:15px;width:26px;flex-shrink:0;}
+.rdl-scope .service-list b{display:block;font-size:15px;margin-bottom:4px;}
+.rdl-scope .service-list span{font-size:14px;color:var(--cream-dim);}
+.rdl-scope .service-visual{aspect-ratio:1/1;border:1px solid rgba(220,159,46,0.12);border-radius:6px;}
+.rdl-scope footer{padding:120px 0 50px;border-top:1px solid rgba(245,239,225,0.06);width:100%;}
+.rdl-scope .cta-block{text-align:center;max-width:640px;margin:0 auto 100px;}
+.rdl-scope .cta-block h2{font-size:clamp(28px,4.2vw,54px);margin-bottom:22px;}
+.rdl-scope .cta-block p{color:var(--cream-dim);margin-bottom:36px;}
+.rdl-scope .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:60px;border-top:1px solid rgba(245,239,225,0.08);padding-top:56px;}
+.rdl-scope .foot-grid h4{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--honey);margin-bottom:18px;}
+.rdl-scope .foot-grid p,.rdl-scope .foot-grid a{font-size:14px;color:var(--cream-dim);display:block;margin-bottom:10px;}
+.rdl-scope .foot-grid a:hover{color:var(--honey);}
+.rdl-scope .foot-bottom{margin-top:70px;font-size:12px;color:var(--cream-dim);opacity:.6;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+@media(max-width:1024px){
+  .rdl-scope .story-grid,.rdl-scope .service-grid{grid-template-columns:1fr;gap:44px;}
+  .rdl-scope .hex-grid{grid-template-columns:1fr 1fr;}
+  .rdl-scope nav{padding:22px 28px;}
+}
+@media(max-width:900px){
+  .rdl-scope .nav-links{display:none;}
+  .rdl-scope .burger{display:flex;}
+  .rdl-scope .hex-grid{grid-template-columns:1fr;}
+  .rdl-scope .foot-grid{grid-template-columns:1fr;gap:36px;}
+  .rdl-scope .hero h1{font-size:clamp(34px,9vw,56px);}
+  .rdl-scope .hex-card{clip-path:none;border-radius:6px;}
+}
+@media(max-width:600px){
+  .rdl-scope .wrap{padding:0 20px;}
+  .rdl-scope nav{padding:18px 20px;}
+  .rdl-scope .logo{font-size:19px;}
+  .rdl-scope .logo svg{width:24px;height:24px;}
+  .rdl-scope .btn-ghost{display:none;}
+  .rdl-scope .hero-actions{flex-direction:column;align-items:stretch;}
+  .rdl-scope .hero-actions .btn{justify-content:center;}
+  .rdl-scope .story,.rdl-scope .products,.rdl-scope .service{padding:70px 0;}
+  .rdl-scope footer{padding:80px 0 34px;}
+  .rdl-scope .story-facts{gap:24px;}
+  .rdl-scope .scroll-cue{display:none;}
+  .rdl-scope .foot-bottom{flex-direction:column;gap:6px;}
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<div id="torch-hexfield">
+  <svg xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="hexpat" width="52" height="90" patternUnits="userSpaceOnUse" patternTransform="scale(1)">
+        <g fill="none" stroke="rgba(220,159,46,0.35)" stroke-width="1">
+          <polygon points="26,2 47,15 47,42 26,55 5,42 5,15"/>
+          <polygon points="0,47 21,60 21,87 0,100 -21,87 -21,60"/>
+          <polygon points="52,47 73,60 73,87 52,100 31,87 31,60"/>
+        </g>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#hexpat)"/>
+  </svg>
+</div>
+<div id="torch-vignette"></div>
+<div id="torch-glow"></div>
+<script>
+(function(){
+  if(window.__torchInit) return;
+  window.__torchInit = true;
+  document.addEventListener('mousemove', function(e){
+    document.documentElement.style.setProperty('--mx', e.clientX + 'px');
+    document.documentElement.style.setProperty('--my', e.clientY + 'px');
+  });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting) en.target.classList.add('in'); });
+  }, {threshold:0.15});
+  function watchReveals(){
+    document.querySelectorAll('.reveal:not(.in)').forEach(function(el){ io.observe(el); });
+  }
+  watchReveals();
+  window.addEventListener('load', watchReveals);
+  setTimeout(watchReveals, 800);
+  function bindBurger(){
+    var burger = document.getElementById('burgerBtn');
+    var mobileNav = document.getElementById('mobileNav');
+    var closeBtn = document.getElementById('mobileNavClose');
+    if(burger && mobileNav && !burger.dataset.bound){
+      burger.dataset.bound = "1";
+      burger.addEventListener('click', function(){ mobileNav.classList.add('open'); });
+      closeBtn.addEventListener('click', function(){ mobileNav.classList.remove('open'); });
+      mobileNav.querySelectorAll('a').forEach(function(a){
+        a.addEventListener('click', function(){ mobileNav.classList.remove('open'); });
+      });
+    }
+  }
+  bindBurger();
+  window.addEventListener('load', bindBurger);
+})();
+</script>
+<div class="rdl-scope">
+<nav>
+  <div class="logo">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L21 7V17L12 22L3 17V7L12 2Z" stroke="#dc9f2e" stroke-width="1.3"/></svg>
+    Le Rucher d'Elsa
+  </div>
+  <div class="nav-links">
+    <a href="#miel">Le miel</a>
+    <a href="#histoire">Notre histoire</a>
+    <a href="#pollinisation">Pollinisation</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="btn btn-ghost">Nous écrire</a>
+  <button class="burger" id="burgerBtn" aria-label="Ouvrir le menu">☰</button>
+</nav>
+<div class="nav-mobile" id="mobileNav">
+  <button class="close" id="mobileNavClose" aria-label="Fermer">✕</button>
+  <a href="#miel">Le miel</a>
+  <a href="#histoire">Notre histoire</a>
+  <a href="#pollinisation">Pollinisation</a>
+  <a href="#contact">Contact</a>
+</div>
+</div><div class="rdl-scope">
+<section class="hero" id="hero">
+  <div class="wrap hero-content">
+    <div class="hero-tag reveal in">
+
+      <span class="eyebrow">bienvenue</span>
+    </div>
+    <h1 class="reveal in">Le Rucher d'Elsa<br><em>Apicultrice et passionnée.</em></h1>
+    <p class="hero-sub reveal in">Vingt colonies conduites en transhumance entre garrigue et lavande.
+      Récolte à la main, extraction à froid sous 40°C, sans mélange de miellées.</p>
+    <div class="hero-actions reveal in">
+      <a href="#miel" class="btn">Découvrir le miel</a>
+      <a href="#histoire" class="btn btn-ghost">Notre histoire →</a>
+    </div>
+  </div>
+
+</section>
+</div><div class="rdl-scope">
+<section class="story" id="histoire">
+  <div class="wrap story-grid">
+    <div class="story-visual reveal">
+      <div class="frame-label">Cadre de hausse — miellée de printemps, avril 2026</div>
+    </div>
+    <div class="reveal">
+      <span class="eyebrow">Notre histoire</span>
+      <h2>Un rucher n'a pas de<br>recette. Il a une saison.</h2>
+      <p>Depuis 2014, nous transhumons nos colonies au fil des floraisons : toutes fleurs de printemps
+        en avril, garrigue en juin, lavande de fin juin à début août. Chaque hausse est levée à la fin
+        de la miellée, jamais avant que le nectar ne soit operculé.</p>
+      <p>Les cadres sont désoperculés à froid, centrifugés sous 40°C puis décantés plusieurs jours avant
+        la mise en pot — aucune chauffe, aucun ensemencement, pour garder intacts les enzymes et les
+        arômes de chaque terroir.</p>
+      <div class="story-facts">
+        <div class="fact"><b>20</b><span>ruches en activité</span></div>
+        <div class="fact"><b>4</b><span>terroirs butinés</span></div>
+        <div class="fact"><b>12</b><span>ans de pratique</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+</div><div class="rdl-scope">
+<section class="products" id="miel">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div><span class="eyebrow">Nos récoltes</span><h2>Trois terroirs, trois miels.</h2></div>
+      <p>Récoltés séparément selon la floraison butinée, sans mélange ni pasteurisation.</p>
+    </div>
+    <div class="hex-grid">
+      <div class="hex-card reveal"><span class="num">01 — Avril</span><h3>Toutes fleurs de printemps</h3>
+        <p>La première miellée de l'année, butinée avant la montée des chaleurs. Miel doux et clair, qui cristallise vite en pot.</p>
+        <span class="price">8,90 € · pot de 250g</span></div>
+      <div class="hex-card reveal"><span class="num">02 — Juin</span><h3>Miel de garrigue</h3>
+        <p>Thym, romarin et ciste des collines sèches. Ambré, corsé, à la pointe résineuse typique de la garrigue.</p>
+        <span class="price">9,90 € · pot de 250g</span></div>
+      <div class="hex-card reveal"><span class="num">03 — Juillet</span><h3>Miel de lavande</h3>
+        <p>Butiné sur les plateaux de Haute-Provence entre fin juin et début août. Texture fine, parfum floral persistant.</p>
+        <span class="price">9,50 € · pot de 250g</span></div>
+    </div>
+  </div>
+</section>
+</div><div class="rdl-scope">
+<section class="service" id="pollinisation">
+  <div class="wrap service-grid">
+    <div class="reveal">
+      <span class="eyebrow">Pour les agriculteurs</span>
+      <h2>Nos ruches travaillent aussi dans vos vergers.</h2>
+      <p>Mise à disposition de colonies pour la pollinisation d'espèces à forte dépendance entomophile —
+        amandiers, cerisiers, pruniers — sur la base d'un contrat simple qui fixe le calendrier de pose,
+        le nombre de colonies par hectare et la conduite du verger pendant la floraison.</p>
+      <ul class="service-list">
+        <li><span class="ico">01</span><div><b>Diagnostic de la parcelle</b><span>Visite avant floraison pour évaluer la surface et définir le nombre de colonies nécessaires à l'hectare.</span></div></li>
+        <li><span class="ico">02</span><div><b>Installation et suivi</b><span>Colonies posées à l'entrée en floraison ; aucun traitement insecticide ou acaricide n'est appliqué en présence des abeilles.</span></div></li>
+        <li><span class="ico">03</span><div><b>Retrait en fin de floraison</b><span>Retrait dès la chute des pétales, avant la reprise des traitements phytosanitaires du verger.</span></div></li>
+      </ul>
+      <a href="#contact" class="btn" style="margin-top:32px;">Demander un devis</a>
+    </div>
+    <div class="service-visual reveal"></div>
+  </div>
+</section>
+</div><div class="rdl-scope">
+<footer id="contact">
+  <div class="wrap">
+    <div class="cta-block reveal">
+      <span class="eyebrow">Où nous trouver</span>
+      <h2>Le miel se déguste sur place,<br>le mardi et le samedi.</h2>
+      <p>Vente directe au rucher, marché de producteurs, ou expédition dans toute la France.</p>
+      <a href="#" class="btn">Écrire au rucher</a>
+    </div>
+    <div class="foot-grid">
+      <div><h4>Le Rucher d'Elsa</h4><p>Apiculture artisanale en Provence-Alpes-Côte d'Azur.</p></div>
+      <div><h4>Navigation</h4><a href="#miel">Le miel</a><a href="#histoire">Notre histoire</a><a href="#pollinisation">Pollinisation</a></div>
+      <div><h4>Contact</h4><a href="#">contact@rucherdelsa.fr</a><a href="#">06 00 00 00 00</a><a href="#">Provence-Alpes-Côte d'Azur</a></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 Le Rucher d'Elsa</span><span>Mentions légales · Politique de confidentialité</span></div>
+  </div>
+</footer>
+</div></body></html>
